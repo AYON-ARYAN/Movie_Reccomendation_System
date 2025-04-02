@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: #f5f5f5; /* Lighter Text Color */
+            text-align: center;
+            overflow: hidden; /* Prevent scrollbars from showing */
+            background-color: #000;
+        }
+
+        /* Dark Animated Gradient Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, #000000, #533132, #5f292f, #e31f1f);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            z-index: -2; /* Ensure it stays in the background */
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Animated Navbar Panel */
+        .navbar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 15px 30px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, #a14848, #efa0a5);
+            animation: navbarBG 5s ease-in-out infinite alternate;
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes navbarBG {
+            0% { background-position: 0%; }
+            100% { background-position: 100%; }
+        }
+
+        /* Navbar Buttons */
+        .navbar a {
+            color: #fff; /* White text */
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 8px 20px;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #000000, #a12121);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .navbar a:hover {
+            background: linear-gradient(135deg, #782929, #000000);
+            transform: scale(1.1);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Main Heading MOODIX */
+        .mainheading {
+            font-size: 100px;
+            font-weight: 900;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #c4c4c4, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s infinite alternate;
+            margin-top: 200px;
+            margin-bottom: 30px;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #cccccc, 0 0 20px #999999;
+            }
+            to {
+                text-shadow: 0 0 20px #ffffff, 0 0 40px #dddddd;
+            }
+        }
+
+        /* Subheading Section */
+        .heading {
+            margin-top: 50px;
+            padding: 20px;
+        }
+
+        .heading h1 {
+            font-size: 40px;
+            font-weight: bold;
+            color: #e0e0e0;
+            margin-bottom: 10px;
+        }
+
+        .heading h2 {
+            font-size: 28px;
+            font-weight: normal;
+            color: #bbbbbb;
+        }
+
+        /* Floating Particles Animation */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #dddddd;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 10s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-50vh) translateX(20px); opacity: 0.4; }
+            100% { transform: translateY(-100vh) translateX(-20px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="{{ url_for('login') }}">LOGIN</a>
+        <a href="{{ url_for('signup') }}">SIGN UP</a>
+    </nav>
+
+    <!-- Main Heading -->
+    <h1 class="mainheading">MOODIX</h1>
+
+    <!-- Subheading Section -->
+    <div class="heading">
+        <h1>Explore Movies That Match Your Unique Taste</h1>
+        <h2>Finding Your Perfect Watch Made Effortless</h2>
+    </div>
+
+    <!-- Floating Particles -->
+    <div class="particles">
+        <!-- Generate particles dynamically -->
+        <script>
+            const particlesContainer = document.querySelector('.particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.animationDuration = `${Math.random() * 10 + 5}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particlesContainer.appendChild(particle);
+            }
+        </script>
+    </div>
+</body>
+</html>

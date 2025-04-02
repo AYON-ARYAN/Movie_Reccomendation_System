@@ -1,0 +1,329 @@
+:root {
+    --bg-color: #4C0608; /* Deep Maroon Background */
+    --primary-color: #7C0A02; /* Blood Red for headings and text */
+    --secondary-color: #FFAA33; /* Warm Yellow for highlights */
+    --text-color: #FCF9F9; /* White Text for contrast */
+    --hover-color: #FF1E27; /* Brighter Red Hover */
+    --heading-font: 'Playfair Display', serif;
+    --body-font: 'Poppins', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style-type: none;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    font-family: "DM Serif Display", sans-serif;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--heading-font);
+    color: var(--primary-color);
+    text-shadow: 0 0 2px #8B0000, 0 0 4px #8B0000; /* Subtle glow effect */
+}
+
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+p:hover {
+    color: white;
+}
+
+section {
+    min-height: 100vh;
+    padding: 10rem 9% 2rem;
+}
+
+span {
+    color: var(--secondary-color);
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem 9%;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 2.5rem;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.navbar a {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-left: 4rem;
+    transition: 0.3s;
+    text-shadow: 0 0 2px #8B0000, 0 0 4px #8B0000; /* Subtle glow effect */
+}
+
+.navbar a:hover {
+    color: var(--hover-color);
+    text-shadow: 0 0 6px #FF1E27, 0 0 8px #FF1E27; /* Slightly stronger glow on hover */
+}
+
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-content h3 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-shadow: 0 0 2px #8B0000, 0 0 4px #8B0000; /* Subtle glow effect */
+}
+
+.home-content h1 {
+    font-size: 5.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--primary-color);
+    text-shadow: 0 0 2px #8B0000, 0 0 4px #8B0000; /* Subtle glow effect */
+}
+
+.home-content p {
+    font-size: 1.7rem;
+    color: var(--text-color);
+}
+
+.home-img {
+    border-radius: 10%;
+    background-color: var(--bg-color);
+    box-shadow: 0 0 3rem rgb(42, 42, 134);
+}
+
+.home-img img {
+    border-radius: 10%;
+    width: 35vw;
+    animation: floatImage 6s ease-in-out infinite;
+}
+
+.social-media a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    height: 4rem;
+    background-color: transparent;
+    border: 5px solid var(--primary-color);
+    border-radius: 50%;
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin: 3rem 1.5rem 3rem 0;
+    transition: all 0.7s;
+}
+
+.social-media a:hover {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    box-shadow: 0 0 1rem var(--primary-color);
+    transform: scale(1.1);
+}
+
+.btn {
+    display: inline-block;
+    padding: 1rem 1rem;
+    background-color: var(--primary-color);
+    border-radius: 30px;
+    box-shadow: 0 0 1rem var(--primary-color);
+    font-weight: 700;
+    color: var(--secondary-color);
+    letter-spacing: 2px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    transform: scale(1.03);
+}
+
+
+
+
+.about{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
+    background-color: var(--bg-color);
+    z-index: 1;
+}
+.about-img{
+    perspective: 800px ;
+}
+.about-img img{
+    width:35vw;
+    height: 32vw;
+    border-radius: 10px;
+    box-shadow: 0 0 1.5rem rgb(189, 41, 41);
+    animation: myAnimation 6s ease-in-out infinite;
+}
+.heading{
+    text-align:center;
+    font-size:4.5rem;
+}
+.about-content h2{
+    text-align: left;
+    line-height:2.3rem;
+}
+.second-h2{
+    font-size: 2rem;
+}
+.about-content h3{
+    font-size:2.3rem;
+}
+.about-content p{
+    font-size: 1.7rem;
+    margin:2rem 0 3rem;
+}
+.services h2{
+    margin-bottom: 5rem;
+}
+.services-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+.services-container  .services-box{
+    flex: 1 1 30rem;
+    background-color: var(--second-bg-color);
+    padding: 3rem 2rem 4rem;
+    border-radius: 2rem;
+    text-align: center;
+    border: 3px solid var(--bg-color);
+    transition: all 0.5s;
+}
+.services-container  .services-box:hover{
+    border-color: var(--main-color);
+    transform:scale(1.03);
+}
+
+.services-box i{
+    font-size: 6rem;
+    color:var(--main-color);
+}
+.services-box h3{
+    font-size: 2rem;
+    color: rgb(42, 42, 134);
+}
+.services-box p{
+    font-size: 1.5rem;
+    margin:1rem 0 3rem;
+
+}
+.genre{
+    background-color: var(--bg-color);
+}
+.genre h2{
+    margin-bottom: 4rem;
+}
+.genre-container{
+    display:grid;
+    grid-template-columns: repeat(3,1fr);
+    align-items: center;
+    gap: 2.5rem;
+}
+.genre-container .genre-box{
+    position: relative;
+    border-radius: 2rem;
+    box-shadow: 0 0 1var(--bg-color);
+    overflow:hidden;
+    display: flex;
+}
+.genre-box img{
+    width: 200px; 
+    height: 250px;
+    transition: all 0.5s;
+}
+.genre-box:hover img{
+    transform:scale(1.1)
+}
+.genre-box .genre-layer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width:100%;
+    height:100%;
+    background: linear-gradient(rgba(68, 47, 47, 0.5),var(--main-color));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 4rem;
+    text-align: center;
+    transform: translateY(100%);
+    transition: all 0.5s ease-in-out;
+}
+.genre-box:hover .genre-layer{
+    transform: translateY(0);
+    cursor:pointer;
+}
+.genre-layer h4{
+    font-size: 3rem;
+
+}
+.genre-layer p{
+    font-size: 1.3rem;
+    margin: 10px 0 1rem;
+}
+.genre-layer a{
+    display:inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 5rem;
+    height: 5rem;
+    background-color: var(--main-color);
+    border-radius: 50%;;
+}
+.genre-layer i{
+    font-size: 2rem;
+    color:var(--second-bg-color);
+}
+
+@keyframes floatImage {
+    0% {
+        transform: translateY(0);
+    }
+    45% {
+        transform: translateY(-2rem);
+    }
+    75%{
+        transform: translateY(2rem);
+    }
+    100% {
+        transform: translateY(0);
+    }
+    
+}
+@keyframes myAnimation {
+    0% {
+      transform: translateZ(0px);
+    }
+    50% {
+      transform: translateZ(30px);
+    }
+    100% {
+      transform: translateZ(0px);
+    }
+  }

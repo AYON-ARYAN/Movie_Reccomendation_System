@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="{{ url_for('static', filename='home_page.css') }}" rel="stylesheet">
+    <title>Portfolio</title>
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffe600;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: rgb(202, 36, 36);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a:hover{
+            background-color: rgb(42, 42, 134);
+            padding: 0;
+        }
+        .navbar {
+            display: flex;
+            align-items: center; /* Align navigation items vertically */
+            padding: 10px 20px;
+        }
+        .searchfield {
+            display: flex;
+            align-items: center;
+        }
+        .search-icon{
+            cursor: pointer;
+            font-size: large;
+        }
+        #searchform{
+            border: 1px solid rgb(202, 36, 36);
+            border-radius: 40px;
+        }
+        
+        #searchinput{
+            color: white;
+            padding: 1rem 1rem;
+            background-color: transparent;
+        }
+        #searchform {
+            display: none; /* Initially hide the search form */
+        }
+        #searchform.liked{
+            display: flex; /* Show search form on click */
+        }
+        .user-icon{
+            cursor: pointer;
+            font-size: large;
+        }
+        .user-icon1{
+            font-size: xx-large;
+            align-items: center;
+        }
+        .profile{
+            display: block;
+        }
+        
+        #selection-box{
+            box-sizing: border-box;
+            border:2px solid rgb(202, 36, 36);
+            border-radius: 10%;
+            background-color: transparent;
+            color: rgb(250, 247, 247);
+            align-content: center;
+            width: 200px;
+            height: 40px;
+        }
+        #selection-box option{
+            color: rgb(202, 36, 36);
+        }
+        #selection-box option:hover{
+            background-color: rgb(42, 42, 134);
+        }
+        .account-container{
+            display: none;
+        }
+        .account-container.clicked{
+            display: block;
+            border:1px solid white;
+            color:aliceblue;
+            margin-right: 20px;
+        }
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            -webkit-text-fill-color: white;
+            -webkit-box-shadow: 0 0 0 1000px transparent inset;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="#home" class="logo">Moodix</a>
+        <nav class="navbar">
+            <div class="searchfield">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <form action="{{ url_for('search') }}" method="POST" id="searchform"> 
+                    <input type="text" name="search" placeholder="Search..." id="searchinput" required>
+                </form>
+            </div>
+            <a href="#home">HOME</a>
+            <a href="#about">ABOUT</a>
+            <a href="#services">SERVICES</a>
+            <div class="dropdown"> 
+             <a href="#" class="dropbtn">FILTER BY</a> <div class="dropdown-content">
+                <a href="#genre">Genre</a>
+                <a href="#language">Language</a>
+                <a href="{{ url_for('popular') }}">Popular</a>
+                <a href="{{ url_for('recent') }}">Recent</a>
+              </div>
+            </div>
+            <a href="#"><i class="fa-regular fa-user user-icon"></i></a>
+            
+            <div class="account-popup">
+                {% if accounts %}
+                <div class="account-container">
+                    {% for account in accounts %}
+                    <div class="account">
+                        <p>Username: {{ account.username }}</p>
+                        <hr>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Welcome to</h3>
+            <h1>Moodix</h1>
+            <h3>Watch What YOU <span>Like</span></h3>
+            <p>
+                Moodix boasts a rich library of movies across genres like action, drama, comedy, and documentaries, designed to cater to every taste. With a strong focus on original content, Moodix delivers critically acclaimed films and unforgettable stories right to your screen.                <br>
+                <br>
+                You can connect us through:
+            </p>
+            <div class="social-media">
+                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            </div>
+        </div>
+        
+    </section>
+    <section class="about" id="about">
+        <div class="about-img">
+            <img src="static/Logo.jpg" alt="about"/>
+        </div>
+        <div class="about-content">
+            <h2 class="heading">About <span>Us</span></h2>
+            <br>
+            <h2 class="second-h2">Movies site </h2>
+            <p>Find your next favorite with Moodix. Dive into a world of entertainment with our extensive library of movies, TV shows, and exclusive originals. Whether you’re in the mood for gripping dramas, adrenaline-pumping action, thought-provoking documentaries, or binge-worthy series, we’ve got something tailored just for you.
+        </div>
+    </section>
+    <section class="services" id="services">
+        <h2 class="heading">Our <span>Services</span></h2>
+        <div class="services-container">
+            <div class="services-box">
+                <i class="fa-solid fa-filter"></i>
+                <h3>Filter Movies</h3>
+                <p>Discover a world of cinematic diversity with our extensive genre selection.Filter movies by language to enjoy content in your preferred language.Explore new genres and languages to expand your cinematic horizons.</p>
+            </div>
+            
+            <div class="services-box">
+                <i class="fa-solid fa-film"></i>
+                <h3>Find your movie match</h3>
+                <p>Quickly discover movies similar to your favorites.Search and find your perfect match.Explore a world of cinematic possibilities with just one click.No more endless scrolling - let us find the perfect movie for you.</p>
+            </div>
+        
+            <div class="services-box">
+                <i class="fa-solid fa-people-group"></i>
+                <h3>Get insights from movie fans</h3>
+                <p>Dive deep into the world of cinema with our in-depth movie reviews, available directly on our platform. Whether you're seeking recommendations or simply want to learn more about your favorite films, we've got you covered.</p>
+            </div>
+        </div>
+    </section>
+    <section class="profile" id="profile">
+        <h2 class="heading">My <span>Profile</span></h2>
+        <i class="fa-regular fa-user user-icon1"></i>
+
+    </section>
+    <section class="genre" id="genre">
+        <h2 class="heading"><span>Genres</span></h2>
+        <div class="container-box">
+            <form action="{{ url_for('genre') }}" method="POST" id="genform">
+                <select name="search" id="selection-box" required>
+                    <option value="" disabled selected>Select Genre</option>
+                    <option value="action">Action</option>
+                    <option value="adventure">Adventure</option>
+                    <option value="animation">Animation</option>
+                    <option value="biography">Biography</option>
+                    <option value="comedy">Comedy</option>
+                    <option value="documentary">Documentary</option>
+                    <option value="drama">Drama</option>
+                    <option value="fantasy">Fantasy</option>
+                    <option value="history">History</option>
+                    <option value="horror">Horror</option>
+                    <option value="musical">Musical</option>
+                    <option value="mystery">Mystery</option>
+                    <option value="romance">Romance</option>
+                    <option value="thriller">Thriller</option>
+                </select>
+                <button type="submit" class="btn btn-secondary" id="recommendButton">Recommend</button>
+
+            </form>
+        </div>
+    </section>
+    <section class="language" id="language">
+        <h2 class="heading"><span>Languages</span></h2>
+        <div class="container-box">
+            <form action="{{ url_for('language') }}" method="POST" id="langform">
+                <select name="search" id="selection-box" required>
+                    <option value="" disabled selected>Select Language</option>
+                    <option value="afrikaans">Afrikaans</option>
+                    <option value="arabic">Arabic</option>
+                    <option value="chinese">Chinese</option>
+                    <option value="czech">Czech</option>
+                    <option value="danish">Danish</option>
+                    <option value="dutch">Dutch</option>
+                    <option value="english">English</option>
+                    <option value="french">French</option>
+                    <option value="german">German</option>
+                    <option value="greek">Greek</option>
+                    <option value="hebrew">Hebrew</option>
+                    <option value="hindi">Hindi</option>
+                    <option value="hungarian">Hungarian</option>
+                    <option value="icelandic">Icelandic</option>
+                    <option value="indonesian">Indonesian</option>
+                    <option value="italian">Italian</option>
+                    <option value="japanese">Japanese</option>
+                    <option value="korean">Korean</option>
+                    <option value="kyrgyz">Kyrgyz</option>
+                    <option value="norwegian">Norwegian</option>
+                    <option value="norwegian bokmål">Norwegian Bokmål</option>
+                    <option value="pashto">Pashto</option>
+                    <option value="persian">Persian</option>
+                    <option value="polish">Polish</option>
+                    <option value="portuguese">Portuguese</option>
+                    <option value="romanian">Romanian</option>
+                    <option value="russian">Russian</option>
+                    <option value="slovenian">Slovenian</option>
+                    <option value="spanish">Spanish</option>
+                    <option value="swedish">Swedish</option>
+                    <option value="tamil">Tamil</option>
+                    <option value="telugu">Telugu</option>
+                    <option value="thai">Thai</option>
+                    <option value="turkish">Turkish</option>
+                    <option value="vietnamese">Vietnamese</option>
+                </select>
+                <button type="submit" class="btn btn-secondary" id="recommendButton">Recommend</button>
+            </form>
+        </div>
+
+    </section>
+    <footer class="footer"></footer>
+    <script>
+        const dropdown = document.querySelector(".dropdown");
+        const btn = dropdown.querySelector(".dropbtn");
+        const content = dropdown.querySelector(".dropdown-content");
+        const searchicon = document.querySelector(".search-icon");
+        const searchInput = document.getElementById("searchinput");
+        const searchForm = document.getElementById("searchform");
+        const profileicon = document.querySelector(".user-icon");
+        const account = document.querySelector(".account-container")
+
+        profileicon.addEventListener("click",function() {
+            account.classList.toggle("clicked");
+        })
+        searchForm.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                //event.preventDefault();
+                searchForm.submit(); 
+            }
+        });
+
+        searchicon.addEventListener("click", function() {
+            searchForm.classList.toggle("liked");
+        });
+
+        btn.addEventListener("click", function() {
+            content.classList.toggle("show");
+        });
+    </script>
+</body>
+</html>
