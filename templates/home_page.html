@@ -118,17 +118,22 @@
                     <input type="text" name="search" placeholder="Search..." id="searchinput" required>
                 </form>
             </div>
-            <a href="#home">HOME</a>
+            <a href="{{ url_for('home') }}">HOME</a>
             <a href="#about">ABOUT</a>
             <a href="#services">SERVICES</a>
             <div class="dropdown"> 
-             <a href="#" class="dropbtn">FILTER BY</a> <div class="dropdown-content">
-                <a href="#genre">Genre</a>
-                <a href="#language">Language</a>
-                <a href="{{ url_for('popular') }}">Popular</a>
-                <a href="{{ url_for('recent') }}">Recent</a>
-              </div>
+                <a href="#" class="dropbtn">FILTER BY</a>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('genre') }}">Genre</a>
+                    <a href="{{ url_for('language') }}">Language</a>
+                    <a href="{{ url_for('popular') }}">Popular</a>
+                    <a href="{{ url_for('recent') }}">Recent</a>
+                </div>
             </div>
+        
+            <!-- ✅ Sentiment Analysis Nav Link -->
+            <a href="http://172.16.237.71:8501" target="_blank">SENTIMENT</a>
+        
             <a href="#"><i class="fa-regular fa-user user-icon"></i></a>
             
             <div class="account-popup">
@@ -144,6 +149,7 @@
                 {% endif %}
             </div>
         </nav>
+        
     </header>
     <section class="home" id="home">
         <div class="home-content">
