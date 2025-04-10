@@ -114,7 +114,7 @@
         <nav class="navbar">
             <div class="searchfield">
                 <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                <form action="{{ url_for('search') }}" method="POST" id="searchform"> 
+                <form action="{{ url_for('search') }}" method="POST" id="searchform">
                     <input type="text" name="search" placeholder="Search..." id="searchinput" required>
                 </form>
             </div>
@@ -135,7 +135,7 @@
             <a href="http://localhost:8501" target="_blank">SENTIMENT</a>
         
             <a href="#"><i class="fa-regular fa-user user-icon"></i></a>
-            
+
             <div class="account-popup">
                 {% if accounts %}
                 <div class="account-container">
