@@ -138,29 +138,33 @@ def login():
    else:
     return render_template('login.html')
 
-     
-      
-@app.route('/signup',methods = ['POST','GET'])
+
+@app.route('/signup', methods=['POST', 'GET'])
 def signup():
-  if request.method == 'POST':
-    name = request.form['name']
-    email = request.form['email']
-    phoneno = request.form['number']
-    username = request.form['username']
-    password = request.form['password']
-    hashed_password = generate_password_hash(password)
-    existing_user = User.query.filter_by(username=username).first()
-    if existing_user:
-        return render_template('signup.html',message="*Username already exists*")
-    user = User(name, email, phoneno, username, hashed_password)
-    try:
-      db.session.add(user)
-      db.session.commit()
-      return redirect(url_for('login')) 
-    except Exception:
-      return render_template('signup.html', message="*An error occurred*")
-  else:
-    return render_template('signup.html')
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        phoneno = request.form['number']
+        username = request.form['username']
+        password = request.form['password']
+
+        # ✅ Fix: Use pbkdf2 instead of scrypt to avoid error
+        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
+            return render_template('signup.html', message="*Username already exists*")
+
+        user = User(name, email, phoneno, username, hashed_password)
+        try:
+            db.session.add(user)
+            db.session.commit()
+            return redirect(url_for('login'))
+        except Exception:
+            return render_template('signup.html', message="*An error occurred*")
+    else:
+        return render_template('signup.html')
+
 
 @app.route('/home')
 def home():
@@ -369,5 +373,6 @@ def reviews():
          review.append((author,review_content,time))
          return redirect(url_for('movie', movie_id=movie_id, search=search, start=start, end=end, movie_referrer=movie_referrer))
 if __name__ == '__main__':
-  app.run(debug=True)
+    app.run(debug=True, port=8080)
+
 

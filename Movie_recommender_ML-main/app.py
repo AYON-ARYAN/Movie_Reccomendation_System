@@ -1,55 +1,87 @@
 import streamlit as st
-import pickle
-import requests
+st.set_page_config(page_title="Moodix - Movie Recommender", layout="wide")  # MUST BE FIRST
 
+# Now import everything else
+import streamlit_authenticator as stauth
+import yaml
+from yaml.loader import SafeLoader
+from recommender import recommend, get_movie_list
+import json
+import os
+from datetime import datetime
 
-def fetch_poster(movie_id):
-    url="https://api.themoviedb.org/3/movie/{}?api_key=8265bd1679663a7ea12ac168da84d2e8&language=en-US".format(movie_id)
-    response=requests.get(url)
-    data=response.json()
-    poster_path=data['poster_path']
-    full_path= "https://image.tmdb.org/t/p/w500/" + poster_path
-    return full_path
+# --- User History Persistence Setup ---
+HISTORY_FILE = "user_history.json"
 
+def load_history():
+    if os.path.exists(HISTORY_FILE):
+        with open(HISTORY_FILE, "r") as f:
+            return json.load(f)
+    return {}
 
+def save_history(history):
+    with open(HISTORY_FILE, "w") as f:
+        json.dump(history, f, indent=4)
 
+def log_user_interaction(user_id, movie_title):
+    history = load_history()
+    if user_id not in history:
+        history[user_id] = []
+    history[user_id].append([movie_title, str(datetime.now())])
+    save_history(history)
 
-def recommend(movie):
-    index = movies[movies['title'] == movie].index[0]
-    distances = sorted(list(enumerate(similarity[index])),reverse=True,key = lambda x: x[1])
-    recommended_movie_names=[]
-    recommended_movie_posters=[]
-    
-    for i in distances[1:6]:
-        movie_id=movies.iloc[i[0]].movie_id
-        recommended_movie_names.append(movies.iloc[i[0]].title)
-        recommended_movie_posters.append(fetch_poster(movie_id))
+def get_user_history(user_id):
+    history = load_history()
+    return history.get(user_id, [])
 
-    return recommended_movie_names,recommended_movie_posters
+# --- Streamlit Authenticator Configuration ---
+with open('/Volumes/BLACK_SHARK/Moodix/Movie_Reccomendation_System/Movie_recommender_ML-main/config.yaml') as file:
+    config = yaml.load(file, Loader=SafeLoader)
 
-st.header("MOODIX- Recommendation system")
+authenticator = stauth.Authenticate(
+    config['credentials'],
+    config['cookie']['name'],
+    config['cookie']['key'],
+    config['cookie']['expiry_days']
+)
 
-movies=pickle.load(open("/Volumes/BLACK_SHARK/Movie_recommender_ML-main/src/movie_list.pkl", "rb"))
-similarity=pickle.load(open("/Volumes/BLACK_SHARK/Movie_recommender_ML-main/src/similarity.pkl", "rb"))
+name, authentication_status, username = authenticator.login("Login", "main")
 
-movie_list=movies['title'].values
-selected_movie=st.selectbox("Type or select a movie from the dropdown list",movie_list)
+# --- App Logic Starts Here ---
+if authentication_status:
+    authenticator.logout("Logout", "sidebar")
+    st.sidebar.write(f"Welcome, {name} 👋")
 
-if st.button("Show Recommendation"):
-    recommended_movie_names,recommended_movie_posters= recommend(selected_movie)
-    col1,col2,col3,col4,col5=st.columns(5)
-    with col1:
-        st.text(recommended_movie_names[0])
-        st.image(recommended_movie_posters[0])
-    with col2:
-        st.text(recommended_movie_names[1])
-        st.image(recommended_movie_posters[1])
-    with col3:
-        st.text(recommended_movie_names[2])
-        st.image(recommended_movie_posters[2])
-    with col4:
-        st.text(recommended_movie_names[3])
-        st.image(recommended_movie_posters[3])
-    with col5:
-        st.text(recommended_movie_names[4])
-        st.image(recommended_movie_posters[4])
+    st.title("🎬 MOODIX - Smart Movie Recommendation System")
+
+    movie_list = get_movie_list()
+    selected_movie = st.selectbox("🎞️ Select a movie you liked:", movie_list)
+
+    if st.button("🎯 Show Recommendations"):
+        log_user_interaction(name, selected_movie)
+        recommended_movie_names, recommended_movie_posters = recommend(selected_movie)
+
+        if recommended_movie_names:
+            st.subheader("📽️ You might also like:")
+            cols = st.columns(5)
+            for i in range(5):
+                with cols[i]:
+                    st.text(recommended_movie_names[i])
+                    st.image(recommended_movie_posters[i])
+        else:
+            st.warning("No recommendations found. Please try another movie.")
+
+    # --- Show User History ---
+    with st.expander("🔍 Your Movie History"):
+        history = get_user_history(name)
+        if history:
+            for title, timestamp in history[::-1]:
+                st.write(f"{timestamp}: {title}")
+        else:
+            st.write("No movie history yet.")
+
+elif authentication_status is False:
+    st.error("Incorrect username or password")
+
+elif authentication_status is None:
+    st.warning("Please enter your username and password")
