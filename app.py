@@ -1,4 +1,6 @@
-from flask import Flask, render_template, request, url_for,redirect,session #session for storing data#
+#session for storing data#
+#uses SQLite for storing the data of user
+from flask import Flask, render_template, request, url_for,redirect,session
 import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -14,7 +16,10 @@ df_credits = pd.read_csv("/Volumes/BLACK_SHARK/Moodix/Movie_Reccomendation_Syste
 tfidf = TfidfVectorizer(stop_words="english")
 df_movies['overview']=df_movies['overview'].fillna("")
 df_movies = df_movies.fillna("")
-tfidf_matrix = tfidf.fit_transform(df_movies['overview']) #converting to matrix 
+
+#converting to matrix 
+tfidf_matrix = tfidf.fit_transform(df_movies['overview']) 
+
 # finding the cosine similarity matrix
 cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
 indices = pd.Series(df_movies.index, index=df_movies['original_title']).drop_duplicates()
@@ -117,8 +122,10 @@ def create_tables():
         db.create_all()
 
 
+
 create_tables()
 
+#this is the main page of the website 
 @app.route('/')
 def main():
   return render_template('mainpage.html')
@@ -148,7 +155,7 @@ def signup():
         username = request.form['username']
         password = request.form['password']
 
-        # ✅ Fix: Use pbkdf2 instead of scrypt to avoid error
+        #Fix: Use pbkdf2 instead of scrypt to avoid error
         hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
 
         existing_user = User.query.filter_by(username=username).first()
