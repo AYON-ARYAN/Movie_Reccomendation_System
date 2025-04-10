@@ -8,8 +8,8 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash
 
-df_movies = pd.read_csv("tmdb_5000_movies.csv")
-df_credits = pd.read_csv("tmdb_5000_credits.csv")
+df_movies = pd.read_csv("/Volumes/BLACK_SHARK/Moodix/Movie_Reccomendation_System/tmdb_5000_movies.csv")
+df_credits = pd.read_csv("/Volumes/BLACK_SHARK/Moodix/Movie_Reccomendation_System/tmdb_5000_credits.csv")
 
 tfidf = TfidfVectorizer(stop_words="english")
 df_movies['overview']=df_movies['overview'].fillna("")
