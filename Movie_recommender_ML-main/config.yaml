@@ -2,7 +2,7 @@ credentials:
   usernames:
     ayonaryan:
       name: Ayon Aryan
-      password: '$2b$12$VjwiXAIhNMUyCr/2xLQleOCSBC63okZ0RWPCV.1sSwX2NqKrO./Vy'
+      password: '$2b$12$BmGC2fQUBqTz.jaXwWujZuhmWMElnXBtEBoBd5UTc62mNtKA/2Ple'
 
 cookie:
   name: moodix_cookie
